@@ -1,4 +1,4 @@
-# Keeping the variables organized in only one place
+# Keeping the variables organized, in only one place
 import transformers
 
 DEVICE = 'cuda'
