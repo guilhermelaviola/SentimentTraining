@@ -52,7 +52,7 @@ def run():
         },
     ]
 
-    num_train_steps = (len(df_train) / config.TRAIN_BATCH_SIZE = config.EPOCHS)
+    num_train_steps = int(len(df_train) / config.TRAIN_BATCH_SIZE * config.EPOCHS)
     optimizer = AdamW(optimizer_parameters, lr=3e-5)
     scheduler = get_linear_schedule_with_warmup(
         optimizer, num_warmup_steps=0, num_training_steps=num_train_steps
