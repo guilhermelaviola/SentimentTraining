@@ -63,7 +63,7 @@ def run():
     best_accuracy = 0
     for epoch in range(config.EPOCHS):
         engine.train_fn(train_data_loader, model, optimizer, device, scheduler)
-        outputs, targets = engine.eval_fn(valid_data_loader, model, device)
+        outputs, targets = engine.evaluation_function(valid_data_loader, model, device)
         outputs = np.array(outputs) >= 0.5
         accuracy = metrics.accuracy_score(targets, outputs)
         print(f'Accuracy Score = {accuracy}')
@@ -71,5 +71,5 @@ def run():
             torch.save(model.state_dict(), config.MODEL_PATH)
             best_accuracy = accuracy
 
-if __name__ == '__main__':
-    run()
+    if __name__ == '__main__':
+        run()
