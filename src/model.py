@@ -3,6 +3,7 @@ import config
 import transformers
 import torch.nn as nn
 
+
 class BERTBaseUncased(nn.Module):
     def __init__(self):
         super(BERTBaseUncased, self).__init__()

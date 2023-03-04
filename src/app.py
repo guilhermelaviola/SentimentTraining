@@ -14,6 +14,7 @@ MODEL = None
 DEVICE = config.DEVICE
 PREDICTION_DICT = dict()
 
+
 def sentence_prediction(sentence):
     tokenizer = config.TOKENIZER
     max_len = config.MAX_LEN
@@ -46,6 +47,7 @@ def sentence_prediction(sentence):
     outputs = MODEL(ids=ids, mask=mask, token_type_ids=token_type_ids)
     return outputs[0][0]
 
+
 @app.route('/predict')
 def predict():
     sentence = request.args.get('sentence')
@@ -60,6 +62,7 @@ def predict():
         'time_taken': str(time.time() - start_time),
     }
     return flask.jsonify(response)
+
 
 if __name__ == "__main__":
     MODEL = BERTBaseUncased()

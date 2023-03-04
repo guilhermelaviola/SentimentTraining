@@ -1,6 +1,7 @@
 import config
 import torch
 
+
 class BERTDataset:
     def __init__(self, review, target):
         self.review = review

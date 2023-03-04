@@ -2,8 +2,10 @@ import torch
 import torch.nn as nn
 from tqdm import tqdm
 
+
 def loss_function(outputs, targets):
-    return nn.BCEWithLogitsLoss()(outputs, targets.view(-1,1))
+    return nn.BCEWithLogitsLoss()(outputs, targets.view(-1, 1))
+
 
 # Still needs the dataset.py file in order for it to be continued
 def train_function(data_loader, model, optimizer, device, scheduler):
@@ -13,7 +15,7 @@ def train_function(data_loader, model, optimizer, device, scheduler):
         ids = d['ids']
         token_type_ids = d['token_type_ids']
         mask = d['mask']
-        targets = d[targets]
+        targets = d['targets']
 
         ids = ids.to(device, dtype=torch.long)
         token_type_ids = token_type_ids.to(device, dtype=torch.long)
@@ -27,6 +29,7 @@ def train_function(data_loader, model, optimizer, device, scheduler):
         loss.backward()
         optimizer.step()
         scheduler.step()
+
 
 def evaluation_function(data_loader, model, device):
     model.eval()
