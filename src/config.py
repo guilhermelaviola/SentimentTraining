@@ -8,5 +8,5 @@ VALID_BATCH_SIZE = 4
 EPOCHS = 10
 BERT_PATH = 'bert-base-uncased'
 MODEL_PATH = '/root/docker_data/model.bin'
-TRAINING_FILE = '/root/docker_data/training_dataset.csv'
+TRAINING_FILE = '/root/docker_data/imdb-dataset.csv'
 TOKENIZER = transformers.BertTokenizer.from_pretrained(BERT_PATH, do_lower_case=True)
