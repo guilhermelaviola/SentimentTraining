@@ -16,7 +16,7 @@ from transformers import get_linear_schedule_with_warmup
 
 def run():
     dfx = pd.read_csv(config.TRAINING_FILE).fillna('none')
-    dfx.sentiment = dfx.sentiment.apply(lambda x:1 if x == 'positive' else 0)
+    dfx.sentiment = dfx.sentiment.apply(lambda x: 1 if x == 'positive' else 0)
 
     df_train, df_valid = model_selection.train_test_split(
         dfx, test_size=0.1, random_state=42, stratify=dfx.sentiment.values
@@ -31,6 +31,14 @@ def run():
 
     train_data_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=config.TRAIN_BATCH_SIZE, num_workers=1
+    )
+
+    valid_dataset = dataset.BERTDataset(
+        review=df_valid.review.values, target=df_valid.sentiment.values
+    )
+
+    valid_data_loader = torch.utils.data.DataLoader(
+        valid_dataset, batch_size=config.VALID_BATCH_SIZE, num_workers=1
     )
 
     device = torch.device('cuda')
@@ -64,7 +72,7 @@ def run():
 
     best_accuracy = 0
     for epoch in range(config.EPOCHS):
-        engine.train_fn(train_data_loader, model, optimizer, device, scheduler)
+        engine.train_function(train_data_loader, model, optimizer, device, scheduler)
         outputs, targets = engine.evaluation_function(valid_data_loader, model, device)
         outputs = np.array(outputs) >= 0.5
         accuracy = metrics.accuracy_score(targets, outputs)
